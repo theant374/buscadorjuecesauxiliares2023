@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  <!--
+    WARNING! Make sure that you match all Quasar related
+    tags to the same version! (Below it's "@2.10.2")
+  -->
+
+  <head>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons" rel="stylesheet" type="text/css">
+    <link href="https://cdn.jsdelivr.net/npm/quasar@2.10.2/dist/quasar.prod.css" rel="stylesheet" type="text/css">
+
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+
+    <style>
+      .my-sticky-header-table .q-table__top {
+        position: sticky;
+        top: 0;
+        background-color: white;
+        padding-bottom: 12px;
+      }
+    </style>
+
+  </head>
+
+  <body>
+    <!-- example of injection point where you write your app template -->
+    <div id="q-app">
+        <div class="q-pa-md">
+          <q-table
+          class="my-sticky-header-table"
+          grid
+          card-class="bg-primary text-white"
+          :rows="rows"
+          :columns="columns"
+          row-key="name"
+          :filter="filter"
+          :rows-per-page-options="[0]"
+          :visible-columns="(toggleSectores? [ 'SECCION', 'COLONIA', 'NOMBRE JUEZ', 'SUPERVISOR ', 'TELEFONOS DE CONTACTO' ] : ['COLONIA', 'NOMBRE JUEZ', 'SUPERVISOR ', 'TELEFONOS DE CONTACTO' ])"
+        >
+
+        <template v-slot:top-left>
+          <span class="text-grey-8 text-h5" >Catálogo de Jueces y Juezas</span>
+        </template>
+
+        <template v-slot:top-right>
+          <q-input rounded outlined dense debounce="300" v-model="filter" placeholder="Nombre, Colonia o Calle">
+            <template v-slot:append>
+              <q-toggle v-model="toggleSectores">
+                <template v-slot:default>
+                  <span style="all: unset; font-size: 0.8rem; line-height: 1; display: block">Sección</span>
+                </template>
+              </q-toggle>
+            </template>
+          </q-input>   
+        </template>
+
+          </div>
+    </div>
+
+    <!-- Add the following at the end of your body tag -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/quasar@2.10.2/dist/quasar.umd.prod.js"></script>
+
+    <script src="./Buscador Jueces Auxiliares.js"></script>
+    
+    <script>
+
+      /*
+        Example kicking off the UI. Obviously, adapt this to your specific needs.
+        Assumes you have a <div id="q-app"></div> in your <body> above
+       */
+
+       const { ref } = Vue
+      const { setCssVar } = Quasar
+      
+      const app = Vue.createApp({
+
+        setup () {
+
+            const toggleSectores = ref(false)
+
+            const columns = [                  
+
+{ name: 'SECCION', label: 'SECCION', field: 'SECCION', sortable: true },
+{ name: 'NOMBRE JUEZ', label: 'NOMBRE JUEZ', field: 'NOMBRE JUEZ', sortable: true },
+{ name: 'SUPERVISOR ', label: 'SUPERVISOR ', field: 'SUPERVISOR ', sortable: true },
+{ name: 'TELEFONOS DE CONTACTO', label: 'TELEFONOS DE CONTACTO', field: 'TELEFONOS DE CONTACTO', sortable: true },
+
+
+
+
+            { name: 'COLONIA', label: 'COLONIA', field: 'COLONIA', sortable: true, field: row => toggleSectores.value ? row.COLONIA : row.COLONIA },
+            ]
+
+            const rows = datos
+
+
+
+
+            //Choose random color from list
+
+            colors = ['#7AADAA','#789F4D','#4479A5','#C2A44F','#B56D3F']
+            setCssVar('primary', colors[Math.floor(Math.random() * colors.length)])
+
+            return {
+                columns,
+                rows,
+                pagination: ref({
+                    rowsPerPage: 0
+                }),
+                filter: ref(''),
+                toggleSectores
+            }
+        }
+      })
+
+      app.use(Quasar)
+      app.mount('#q-app')
+    </script>
+  </body>
+</html>
