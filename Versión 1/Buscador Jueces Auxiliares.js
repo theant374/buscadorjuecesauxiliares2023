@@ -1,4 +1,5 @@
- {
+const datos=[
+{
 "BUSCADOR":[
  {
   "SECCION CODG": 1336,
