@@ -1,6 +1,4 @@
 const datos=[
-{
-"BUSCADOR":[
  {
   "SECCION CODG": 1336,
   "SECCION": 1336,
@@ -3460,4 +3458,3 @@ const datos=[
   "NARVARTE": "LA ALIANZA"
  }
 ]
-}
